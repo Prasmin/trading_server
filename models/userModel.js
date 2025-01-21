@@ -1,5 +1,4 @@
-import { Client } from "pg";
-import { config } from "../config/dbConnection.js";
+import { pool } from "../config/dbConnection.js";
 
 // export const getAllUsersService = async () => {
 //   const result = await config.query("SELECT * FROM users");
@@ -11,10 +10,11 @@ import { config } from "../config/dbConnection.js";
 // };
 
 export const createUserService = async (name, email) => {
-  const result = await Client.query(
+  const result = await pool.query(
     "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
     [name, email]
   );
+
   return result.rows[0];
 };
 // export const updateUserService = async (id, name, email) => {

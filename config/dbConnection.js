@@ -1,34 +1,52 @@
 import "dotenv/config";
 import pg from "pg";
+const { Pool } = pg;
+// import pg from "pg";
 
-const { Client } = pg;
+// const { Client } = pg;
 
-export const config = {
+// export const client = {
+//   host: process.env.PGHOST,
+//   port: process.env.PGPORT,
+//   user: process.env.PGUSER,
+//   password: process.env.PGPASSWORD,
+//   database: process.env.PGDATABASE,
+// };
+
+export const pool = new Pool({
   host: process.env.PGHOST,
   port: process.env.PGPORT,
   user: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
+});
+
+export const connectDb = async () => {
+  try {
+    await pool.connect();
+    console.log("Connected to PostgreSQL database");
+  } catch (error) {
+    console.error("Error connecting to the database:", error);
+  }
 };
 
-let client;
+// export default async function connectToDatabase() {
 
-export default async function connectToDatabase() {
-  if (!client) {
-    client = new Client(config);
-    try {
-      await client.connect();
-      console.log("Connected to the database successfully.");
-    } catch (error) {
-      await client.end();
-      console.log("disconnected to the database");
-      console.error("Error connecting to the database:", error);
-      process.exit(1); // Exit the process if the connection fails
-    }
-  }
+//     try {
+//       const client = new Client({
 
-  return client; // Return the client instance for reuse
-}
+//       })
+//       await client.connect();
+//       console.log("Connected to the database successfully.");
+//     } catch (error) {
+//       await client.end();
+//       console.log("disconnected to the database");
+//       console.error("Error connecting to the database:", error);
+//       process.exit(1); // Exit the process if the connection fails
+//     }
+
+//   return client; // Return the client instance for reuse
+// }
 
 //Testing for database connection.
 // const result = await client.query("SELECT current_database()");
