@@ -14,7 +14,7 @@ export const createUserService = async (name, email) => {
     "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
     [name, email]
   );
-
+  console.log(result.rows[0]);
   return result.rows[0];
 };
 // export const updateUserService = async (id, name, email) => {

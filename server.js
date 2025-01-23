@@ -6,7 +6,6 @@ import userRoutes from "./routes/userRoutes.js";
 import errorHandling from "./middlewares/errorHandler.js";
 
 import cors from "cors";
-import createUserTable from "./data/userSchema.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -24,9 +23,6 @@ app.use(express.json());
 
 //error handling
 app.use(errorHandling);
-
-//user schema
-createUserTable();
 
 //routes
 app.use("/api", userRoutes);
