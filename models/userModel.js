@@ -1,9 +1,10 @@
 import { pool } from "../config/dbConnection.js";
 
-// export const getAllUsersService = async () => {
-//   const result = await config.query("SELECT * FROM users");
-//   return result.rows;
-// };
+export const getAllUsersService = async () => {
+  const result = await pool.query("SELECT * FROM playing_with_neon");
+  console.log(result);
+  return result.rows;
+};
 // export const getUserByIdService = async (id) => {
 //   const result = await config.query("SELECT * FROM users where id = $1", [id]);
 //   return result.rows[0];
@@ -14,7 +15,7 @@ export const createUserService = async (name, email) => {
     "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
     [name, email]
   );
-  console.log(result.rows[0]);
+
   return result.rows[0];
 };
 // export const updateUserService = async (id, name, email) => {
